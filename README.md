@@ -201,3 +201,88 @@ $theme-colors: (
   color: white(0.9);
 }
 ```
+
+#### @use
+
+The @use rule loads mixins, functions, and variables from other Sass stylesheets
+
+```scss
+// foundation/_code.scss
+code {
+  padding: 0.25em;
+  line-height: 0;
+}
+
+// foundation/_lists.scss
+ul,
+ol {
+  text-align: left;
+
+  & & {
+    padding: {
+      bottom: 0;
+      left: 0;
+    }
+  }
+}
+
+// style.scss
+@use 'foundation/code';
+@use 'foundation/lists';
+```
+
+#### @import
+
+Sass extends CSS's @import rule with the ability to import Sass and CSS stylesheets, providing access to mixins, functions, and variables and combining multiple stylesheets' CSS together.
+
+```scss
+SCSS SYNTAX
+// foundation/_code.scss
+code {
+  padding: 0.25em;
+  line-height: 0;
+}
+// foundation/_lists.scss
+ul,
+ol {
+  text-align: left;
+
+  & & {
+    padding: {
+      bottom: 0;
+      left: 0;
+    }
+  }
+}
+// style.scss
+@import "foundation/code", "foundation/lists";
+```
+
+#### @extend
+
+There are often cases when designing a page when one class should have all the styles of another class, as well as its own specific styles.
+
+```scss
+// scss
+
+.error {
+  border: 1px #f00;
+  background-color: #fdd;
+
+  &--serious {
+    @extend .error;
+    border-width: 3px;
+  }
+}
+
+// css
+
+.error,
+.error--serious {
+  border: 1px #f00;
+  background-color: #fdd;
+}
+.error--serious {
+  border-width: 3px;
+}
+```
