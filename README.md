@@ -1,5 +1,13 @@
 ## scss notes
 
+- based on JS
+- it is a superset of css
+- compiles down to css
+- used for:
+  - clean code
+  - makes you write fewer code so dev can write css faster
+  - compatible with all versions of css
+
 ### general features
 
 - nesting
@@ -24,16 +32,24 @@
   - scss code
 
   ```scss
-  .enlarge {
-    font-size: 14px;
-    transition: {
-      property: font-size;
-      duration: 4s;
-      delay: 2s;
-    }
+  .accordion {
+    max-width: 600px;
+    margin: 4rem auto;
+    width: 90%;
+    font-family: "Raleway", sans-serif;
+    background: #f4f4f4;
 
-    &:hover {
-      font-size: 36px;
+    &__copy {
+      display: none;
+      padding: 1rem 1.5rem 2rem 1.5rem;
+      color: gray;
+      line-height: 1.6;
+      font-size: 14px;
+      font-weight: 500;
+
+      &--open {
+        display: block;
+      }
     }
   }
   ```
@@ -62,7 +78,8 @@
   ```
 
 - placeholder selectors
-  these get emitted when not extended
+  - these get emitted when not extended
+  - used for reusing existing styles
 
 ```scss
 %toolbelt {
@@ -84,7 +101,11 @@
 
 ### benefits over traditional css
 
-### why scss?
+- syntax friendly
+- offers variables
+- uses nested syntax
+- provides features such as mixins (for shortening the code)
+- files can be seperated and merged (for code modularity)
 
 ### variables
 
@@ -131,4 +152,31 @@ $theme-colors: (
 }
 ```
 
-###
+#### mixins and includes
+
+- allows you to re-use code
+  - scss code:
+
+```scss
+@mixin corner-icon($name, $top-or-bottom, $left-or-right) {
+  .icon-#{$name} {
+    background-image: url("/icons/#{$name}.svg");
+    position: absolute;
+    #{$top-or-bottom}: 0;
+    #{$left-or-right}: 0;
+  }
+}
+
+@include corner-icon("mail", top, left);
+```
+
+- css code:
+
+```css
+.icon-mail {
+  background-image: url("/icons/mail.svg");
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+```
