@@ -155,28 +155,49 @@ $theme-colors: (
 #### mixins and includes
 
 - allows you to re-use code
+
   - scss code:
 
-```scss
-@mixin corner-icon($name, $top-or-bottom, $left-or-right) {
-  .icon-#{$name} {
-    background-image: url("/icons/#{$name}.svg");
-    position: absolute;
-    #{$top-or-bottom}: 0;
-    #{$left-or-right}: 0;
+  ```scss
+  @mixin corner-icon($name, $top-or-bottom, $left-or-right) {
+    .icon-#{$name} {
+      background-image: url("/icons/#{$name}.svg");
+      position: absolute;
+      #{$top-or-bottom}: 0;
+      #{$left-or-right}: 0;
+    }
   }
+
+  @include corner-icon("mail", top, left);
+  ```
+
+  - css code:
+
+  ```css
+  .icon-mail {
+    background-image: url("/icons/mail.svg");
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  ```
+
+#### functions
+
+- allows us to define complex operations that we can re-use.
+- they make it easy to abstract out common formulas and behaviors in a readable way.
+
+```scss
+@function black($opacity) {
+  @return rgba(black, $opacity);
 }
 
-@include corner-icon("mail", top, left);
-```
+@function white($opacity) {
+  @return rgba(white, $opacity);
+}
 
-- css code:
-
-```css
-.icon-mail {
-  background-image: url("/icons/mail.svg");
-  position: absolute;
-  top: 0;
-  left: 0;
+.my-class {
+  background: black(0.15);
+  color: white(0.9);
 }
 ```

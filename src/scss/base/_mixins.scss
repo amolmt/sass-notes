@@ -1,0 +1,162 @@
+// for animation
+
+@mixin animation-mixin($name, $from, $to) {
+  @keyframes #{$name} {
+    0% {
+      transform: translate3d($from, 0, 0);
+      opacity: 0;
+    }
+    100% {
+      transform: translate3d($to, 0, 0);
+      opacity: 1;
+    }
+  }
+}
+
+@include animation-mixin(slide-1, 0, 100%);
+@include animation-mixin(slide-2, 0, 200%);
+
+.box-1 {
+  background-color: magenta;
+  animation: slide-1 2s ease infinite;
+}
+
+.box-2 {
+  background-color: greenyellow;
+  animation: slide-1 2s ease infinite;
+}
+
+// mixin for media queries
+
+@mixin for-phone-only {
+  @media (max-width: 599px) {
+    @content;
+  }
+}
+@mixin for-tablet-portrait-up {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+@mixin for-tablet-landscape-up {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+@mixin for-desktop-up {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+@mixin for-big-desktop-up {
+  @media (min-width: 1800px) {
+    @content;
+  }
+}
+
+// usage
+
+.header-title {
+  font-size: 2rem;
+
+  @include for-phone-only {
+    font-size: 1rem;
+  }
+}
+
+// mixin for creating a gradient
+
+@mixin linear-gradient($direction, $color-stops...) {
+  background: nth(nth($color-stops, 1), 1);
+  background: -webkit-linear-gradient(
+    legacy-direction($direction),
+    $color-stops
+  );
+  background: linear-gradient($direction, $color-stops);
+}
+
+// usage
+
+.selector {
+  background-image: linear-gradient(hotpink, tomato);
+}
+
+/* MixinBank */
+
+// ************************************
+
+// TABLE OF CONTENTS
+
+// 1 - Media Queries
+// 2 - Hide and Show Element with Transition
+// 3 - Center Element (with position: absolute)
+// 4 - Fullscreen Background Image
+// 5 - Full Width/Height and Centered Image
+
+// ************************************
+
+// 2 - Hide and Show Element with Transition
+// -------------------------------------------
+//
+
+@mixin fade($type) {
+  @if $type == "hide" {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1s, opacity 1s;
+  } @else if $type == "show" {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 1s, opacity 1s;
+  }
+}
+
+// 3 - Center Element
+// -------------------
+// Center an element vertically/horizontally/both using the
+// "position: absolute" method
+// NOTE: Parent element must be positioned
+
+@mixin center($position) {
+  position: absolute;
+
+  @if $position == "vertical" {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  } @else if $position == "horizontal" {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translate(-50%);
+  } @else if $position == "both" {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+
+// 4 - Fullscreen Background Image
+// --------------------------------
+
+@mixin bg-cover($url) {
+  background: url($url) no-repeat center center fixed;
+  background-size: cover;
+}
+
+// 5 - Full Width/Height and Centered Image
+// -------------------------------------------
+// Position an image within it's parent element so that it
+// takes up the full height and width of the parent element, and
+// is positioned with its center in the middle
+
+@mixin img-cover {
+  min-height: 100%;
+  width: 100%;
+  height: auto;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
