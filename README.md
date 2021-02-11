@@ -1,4 +1,4 @@
-## scss notes
+## sass notes
 
 - based on JS
 - it is a superset of css
